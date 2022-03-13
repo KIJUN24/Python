@@ -3,6 +3,7 @@
 #### spaceship png : https://littledeep.com/spaceship-illustration-free-download/
 
 
+from tkinter.tix import Tree
 import pygame
 import random
 import time
@@ -15,7 +16,7 @@ pygame.init()
 size = [400, 900]
 screen = pygame.display.set_mode(size)
 
-title = "SpaceShip Game"
+title = "My Game"
 pygame.display.set_caption(title)
 
 # 3. 게임 내 필요한 설정
@@ -51,6 +52,15 @@ def crash(a, b):
     else:
         return False
 
+def countdown(num_sec):
+    while num_sec:
+        s = divmod(num_sec, 60)
+        sec_format = "{:02d}".format(s)
+        print(sec_format, end = '/r')
+        time.sleep(1)
+        num_sec -= 1
+    print("The End")
+
 
 spaceship = object()
 spaceship.put_image("C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_2\\spaceship1.png")
@@ -75,15 +85,20 @@ k = 0
 game_over = 0
 kill = 0
 loss = 0
+game_replay = 0
 
 # 4-0. 게임 시작 대기 화면
 stop_button = 0
 while stop_button == 0:
     clock.tick(60)
     for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            stop_button = 1
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 stop_button = 1
+                
+
     screen.fill(black)
 
     # text : start
@@ -112,9 +127,15 @@ while stop_button == 0:
                 left_go = True
             elif event.key == pygame.K_RIGHT:
                 right_go = True
-            # elif event.key == pygame.K_FRONT:
-            #     right_go = True
-            # elif event.key == pygame.K_BACK:
+            elif event.key == pygame.K_UP:
+                front_go = True
+            elif event.key == pygame.K_DOWN:
+                back_go = True
+            # elif event.key == pygame.K_UP and pygame.K_LEFT:
+            #     front_go = True
+            #     left_go = True
+            # elif event.key == pygame.K_UP and pygame.K_RIGHT:
+            #     back_go = True
             #     right_go = True
             elif event.key == pygame.K_SPACE:
                 bullet_go = True
@@ -125,10 +146,17 @@ while stop_button == 0:
                 left_go = False
             elif event.key == pygame.K_RIGHT:
                 right_go = False
-            # elif event.key == pygame.K_UP:
+            elif event.key == pygame.K_UP:
+                front_go = False
+            elif event.key == pygame.K_DOWN:
+                back_go = False
+            # elif event.key == pygame.K_UP and pygame.K_LEFT:
             #     front_go = False
-            # elif event.key == pygame.K_DOWN:
-            #     back_go = False
+            #     left_go = False
+            # elif event.key == pygame.K_UP and pygame.K_RIGHT:
+            #     front_go = False
+            #     right_go = False
+            
             elif event.key == pygame.K_SPACE:
                 bullet_go = False
 
@@ -146,6 +174,22 @@ while stop_button == 0:
         spaceship.x += spaceship.move
         if spaceship.x > size[0] - spaceship.sx:
             spaceship.x = size[0] - spaceship.sx
+    elif front_go == True:
+        spaceship.y -= spaceship.move
+        if spaceship.y <= 0:
+            spaceship.y = 0
+    elif back_go == True:
+        spaceship.y += spaceship.move
+        if spaceship.y > size[1] - spaceship.sy:
+            spaceship.y = size[1] - spaceship.sy
+
+    # elif front_go == True and left_go == True:
+    #     spaceship.y += spaceship.move
+    #     spaceship.x -= spaceship.move
+    #     if spaceship.y <= 0:
+    #         spaceship.y = 0
+    #     if spaceship.x < 0:
+    #         spaceship.x = 0
 
     # bullet
     if bullet_go == True and k % 8 == 0:
@@ -209,7 +253,8 @@ while stop_button == 0:
         if crash(a, spaceship) == True:
             stop_button = 1
             game_over = 1
-    
+
+                
     # 4-4. 그리기
     screen.fill(black)
     #spaceship
@@ -225,11 +270,9 @@ while stop_button == 0:
     font = pygame.font.Font("C:\\Windows\\Fonts\\ariblk.ttf", 20)
     text_kill = font.render("killed : {0}   loss : {1}".format(kill, loss), True, (255, 255, 0))
     screen.blit(text_kill, (10, 5))
-
     # text : time
     text_time = font.render("time : {0}".format(delta_time), True, (255, 255, 255))
     screen.blit(text_time, (size[0] - 100, 5))
-
 
     # 4-5. 업데이트
     pygame.display.flip()
@@ -237,13 +280,48 @@ while stop_button == 0:
 # 5. 게임 종료
 while game_over == 1:
     clock.tick(60)
+    
+    # text : Game over
+    font_gameover = pygame.font.Font("C:\\Windows\\Fonts\\ariblk.ttf", 40)
+    text_gameover = font_gameover.render("GAME OVER...", True, (255, 0, 0))
+    screen.blit(text_gameover, (50, round(size[1] * 1/2 - 80)))
+    font_gameover_2 = pygame.font.Font("C:\\Windows\\Fonts\\ariblk.ttf", 20)
+    text_gameover_2 = font_gameover_2.render("PRESS SPACE BAR", True, (255, 0, 0))
+    screen.blit(text_gameover_2, (53, round(size[1] * 1/2 - 30)))
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_over = 0
-    # text : Game over
-    font = pygame.font.Font("C:\\Windows\\Fonts\\ariblk.ttf", 40)
-    text_gameover = font.render("GAME OVER...", True, (255, 0, 0))
-    screen.blit(text_gameover, (50, round(size[1] * 1/2 - 80)))
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                game_over = 0
+                game_replay = 1
+
+    pygame.display.flip()
+
+# 6. 게임 리플레이(새로운 while문)
+while game_replay == 1:
+    clock.tick(60)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_replay = 0
+
+    screen.fill(black)
+
+    # text : start
+    font_replay = pygame.font.Font("C:\\Windows\\Fonts\\ariblk.ttf", 40)
+    text_replay = font_replay.render("Game Replay ???", True, (255, 255, 255))
+    screen.blit(text_replay, (15, round(size[1] * 1/2 - 100)))
+
+    font_replay = pygame.font.Font("C:\\Windows\\Fonts\\ariblk.ttf", 15)
+    text_no = font.render("NO", True, (255, 255, 255))
+    screen.blit(text_no, (size[0] * 1/2 - 100, round(size[1] * 1/2 - 30)))
+
+    font_replay = pygame.font.Font("C:\\Windows\\Fonts\\ariblk.ttf", 15)
+    text_yes = font.render("YES", True, (255, 255, 255))
+    screen.blit(text_yes, (size[0] * 1/2 + 50, round(size[1] * 1/2 - 30)))
+
     pygame.display.flip()
 
 pygame.quit()
