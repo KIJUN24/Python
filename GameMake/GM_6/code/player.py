@@ -1,6 +1,5 @@
 # image : https://www.youtube.com/watch?v=YWN8GcmJ-jA&t=2531s
 
-from inspect import formatargvalues
 import pygame
 from support import import_folder
 

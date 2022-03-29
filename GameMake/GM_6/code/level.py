@@ -15,7 +15,7 @@ class Level:
 
         # dust
         self.dust_sprite = pygame.sprite.GroupSingle()
-        self.get_player_on_ground = False
+        self.player_on_ground = False
 
     def create_jump_particles(self, pos):
         if self.player.sprite.facing_right:
