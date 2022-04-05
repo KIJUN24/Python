@@ -7,9 +7,9 @@ from random import choice, randint
 
 class Sky:
     def __init__(self, horizon):
-        self.top = pygame.image.load('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\decoration\\sky\\sky_top.png').convert_alpha()
-        self.bottom = pygame.image.load('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\decoration\\sky\\sky_bottom.png').convert_alpha()
-        self.middle = pygame.image.load('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\decoration\\sky\\sky_middle.png').convert_alpha()
+        self.top = pygame.image.load('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\decoration\\sky\\sky_top.png').convert()
+        self.bottom = pygame.image.load('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\decoration\\sky\\sky_bottom.png').convert()
+        self.middle = pygame.image.load('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\decoration\\sky\\sky_middle.png').convert()
 
         self.horizon = horizon
 
@@ -32,7 +32,7 @@ class Water:
     def __init__(self, top, level_width):
         water_start = -screen_width
         water_tile_width = 192
-        tile_x_amount = int((level_width + screen_width) / water_tile_width)
+        tile_x_amount = int((level_width + screen_width * 2) / water_tile_width)
         self.water_sprites = pygame.sprite.Group()
 
         for tile in range(tile_x_amount):

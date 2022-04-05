@@ -12,6 +12,7 @@ class Level:
         # general setup
         self.display_surface = surface
         self.world_shift = 0
+        self.current_x = None
 
         # player
         player_layout = import_csv_layout(level_data['player'])
@@ -21,6 +22,7 @@ class Level:
 
         # dust
         self.dust_sprite = pygame.sprite.GroupSingle()
+        self.player_on_ground = False
 
         # terrain setup
         terrain_layout = import_csv_layout(level_data['terrain'])
@@ -57,7 +59,7 @@ class Level:
         # decoration
         self.sky = Sky(8)
         level_width = len(terrain_layout[0]) * tile_size
-        self.water = Water(screen_height - 25, level_width)
+        self.water = Water(screen_height - 20, level_width)
         self.cloud = Clouds(400, level_width, 20)
 
     def create_tile_group(self, layout, type):
@@ -73,10 +75,12 @@ class Level:
                         terrain_tile_list = import_cut_graphics('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\terrain\\terrain_tiles.png')
                         tile_surface = terrain_tile_list[int(val)]
                         sprite = StaticTile(tile_size, x, y, tile_surface)
+                        
                     if type == 'grass':
                         grass_tile_list = import_cut_graphics('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\decoration\\grass\\grass.png')
                         tile_surface = grass_tile_list[int(val)]
                         sprite = StaticTile(tile_size, x, y, tile_surface)
+
                     if type == 'crates':
                         sprite = Crate(tile_size, x, y)
 
@@ -149,7 +153,6 @@ class Level:
 
         if player.on_left and (player.rect.left < self.current_x or player.direction.x >= 0):
             player.on_left = False
-
         if player.on_right and (player.rect.right > self.current_x or player.direction.x <= 0):
             player.on_right = False
 
@@ -171,7 +174,7 @@ class Level:
 
         if player.on_ground and player.direction.y < 0 or player.direction.y > 1:
             player.on_ground = False
-        if player.on_ceiling and player.direction.y > 0:
+        if player.on_ceiling and player.direction.y > 0.1:
             player.on_ceiling = False
 
     def scroll_x(self):
@@ -188,6 +191,21 @@ class Level:
         else:
             self.world_shift = 0
             player.speed = 8
+
+    def get_player_on_ground(self):
+        if self.player.sprite.on_ground:
+            self.player_on_ground = True
+        else:
+            self.player_on_ground = False
+
+    def create_landing_dust(self):
+        if not self.player_on_ground and self.player.sprite.on_ground and not self.dust_sprite.sprites():
+            if self.player.sprite.facing_right:
+                offset = pygame.math.Vector2(10, 15)
+            else:
+                offset = pygame.math.Vector2(-10, 15)
+            fall_dust_particle = ParticleEffect(self.player.sprite.rect.midbottom - offset, 'land')
+            self.dust_sprite.add(fall_dust_particle)
 
     def run(self):
         # run the entire game / level
@@ -226,10 +244,18 @@ class Level:
         self.fg_palm_sprites.update(self.world_shift)
         self.fg_palm_sprites.draw(self.display_surface)
 
+        # dust particles
+        self.dust_sprite.update(self.world_shift)
+        self.dust_sprite.draw(self.display_surface)
+
         # player sprites
         self.player.update()
         self.horizontal_movement_collision()
+        
+        self.get_player_on_ground()
         self.vertical_movement_collision()
+        self.create_landing_dust()
+
         self.scroll_x()
         self.player.draw(self.display_surface)
         self.goal.update(self.world_shift)

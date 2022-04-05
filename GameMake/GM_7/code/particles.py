@@ -1,3 +1,4 @@
+
 import pygame
 from support import import_folder
 
@@ -7,9 +8,9 @@ class ParticleEffect(pygame.sprite.Sprite):
         self.frame_index = 0
         self.animation_speed = 0.5
         if type == 'jump':
-            self.frames = import_folder('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_6\\graphics\\character\\dust_particles\\jump')
+            self.frames = import_folder('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\character\\dust_particles\\jump')
         if type == 'land':
-            self.frames = import_folder('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_6\\graphics\\character\\dust_particles\\land')
+            self.frames = import_folder('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\character\\dust_particles\\land')
         self.image = self.frames[self.frame_index]
         self.rect = self.image.get_rect(center = pos)
 
