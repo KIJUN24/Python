@@ -4,7 +4,7 @@ import pygame
 from support import import_folder
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, surface, create_jump_particles):
+    def __init__(self, pos, surface, create_jump_particles, change_health):
         super().__init__()
         self.import_character_assets()
         self.frame_index = 0
@@ -32,6 +32,9 @@ class Player(pygame.sprite.Sprite):
         self.on_ceiling = False
         self.on_left = False
         self.on_right = False
+
+        # health management
+        self.change_health = change_health
 
     def import_character_assets(self):
         character_path = 'C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\character\\'
@@ -122,6 +125,9 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         self.direction.y = self.jump_speed
+
+    def get_damage(self):
+        self.change_health(-10)
 
     def update(self):
         self.get_input()

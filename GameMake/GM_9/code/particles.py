@@ -10,6 +10,8 @@ class ParticleEffect(pygame.sprite.Sprite):
             self.frames = import_folder('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\character\\dust_particles\\jump')
         if type == 'land':
             self.frames = import_folder('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\character\\dust_particles\\land')
+        if type == 'explosion':
+            self.frames = import_folder('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_8_7\\graphics\\enemy\\explosion')
         self.image = self.frames[self.frame_index]
         self.rect = self.image.get_rect(center = pos)
 
