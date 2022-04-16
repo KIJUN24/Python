@@ -1,4 +1,3 @@
-from math import gamma
 import pygame, sys
 from settings import *
 from level import Level
