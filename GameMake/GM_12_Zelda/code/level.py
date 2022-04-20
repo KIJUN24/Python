@@ -41,14 +41,14 @@ class Level:
 
     def create_map(self):
         layouts = {
-            'boundary': import_csv_layout('GameMake/GM12_step_1_Level/map/map_FloorBlocks.csv'),
-            'grass': import_csv_layout('GameMake/GM12_step_1_Level/map/map_Grass.csv'),
-            'object': import_csv_layout('GameMake/GM12_step_1_Level/map/map_LargeObjects.csv'),
-            'entities': import_csv_layout('GameMake/GM12_step_1_Level/map/map_Entities.csv')
+            'boundary': import_csv_layout('GameMake/GM_12_Zelda/map/map_FloorBlocks.csv'),
+            'grass': import_csv_layout('GameMake/GM_12_Zelda/map/map_Grass.csv'),
+            'object': import_csv_layout('GameMake/GM_12_Zelda/map/map_LargeObjects.csv'),
+            'entities': import_csv_layout('GameMake/GM_12_Zelda/map/map_Entities.csv')
         }
         graphics = {
-            'grass': import_folder('GameMake/GM12_step_1_Level/graphics/grass'),
-            'objects': import_folder('GameMake/GM12_step_1_Level/graphics/objects')
+            'grass': import_folder('GameMake/GM_12_Zelda/graphics/grass'),
+            'objects': import_folder('GameMake/GM_12_Zelda/graphics/objects')
         }
 
         for style, layout in layouts.items():   # style = 'boundary, layout = import_csv_layout
@@ -169,7 +169,7 @@ class YSortCameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
 
         # creating the floor
-        self.floor_surf = pygame.image.load('GameMake/GM12_step_1_Level/graphics/tilemap/ground.png').convert()
+        self.floor_surf = pygame.image.load('GameMake/GM_12_Zelda/graphics/tilemap/ground.png').convert()
         self.floor_rect = self.floor_surf.get_rect(topleft = (0,0))
 
     def custom_draw(self, player):

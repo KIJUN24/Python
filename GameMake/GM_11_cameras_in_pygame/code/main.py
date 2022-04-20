@@ -5,13 +5,13 @@ from random import randint
 class Tree(pygame.sprite.Sprite):
     def __init__(self, pos, group):
         super().__init__(group)
-        self.image = pygame.image.load('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM11_cameras_in_pygame\\graphics\\tree.png').convert_alpha()
+        self.image = pygame.image.load('GameMake/GM_11_cameras_in_pygame/graphics/tree.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, group):
         super().__init__(group)
-        self.image = pygame.image.load('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM11_cameras_in_pygame\\graphics\\player.png').convert_alpha()
+        self.image = pygame.image.load('GameMake/GM_11_cameras_in_pygame/graphics/player.png').convert_alpha()
         self.rect = self.image.get_rect(center = pos)
         self.direction = pygame.math.Vector2()
         self.speed = 5
@@ -56,7 +56,7 @@ class CameraGroup(pygame.sprite.Group):
         self.camera_rect = pygame.Rect(l, t, w, h)
 
         # ground
-        self.ground_surf = pygame.image.load('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM11_cameras_in_pygame\\graphics\\ground.png').convert_alpha()
+        self.ground_surf = pygame.image.load('GameMake/GM_11_cameras_in_pygame/graphics/ground.png').convert_alpha()
         self.ground_rect = self.ground_surf.get_rect(topleft = (0,0))
 
         # camera speed

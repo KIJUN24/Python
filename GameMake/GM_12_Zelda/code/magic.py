@@ -6,8 +6,8 @@ class MagicPlayer:
     def __init__(self, animation_player):
         self.animation_player = animation_player
         self.sounds = {
-            'heal': pygame.mixer.Sound('GameMake/GM12_step_1_Level/audio/heal.wav'),
-            'flame': pygame.mixer.Sound('GameMake/GM12_step_1_Level/audio/Fire.wav')
+            'heal': pygame.mixer.Sound('GameMake/GM_12_Zelda/audio/heal.wav'),
+            'flame': pygame.mixer.Sound('GameMake/GM_12_Zelda/audio/Fire.wav')
             }
 
     def heal(self, player, strength, cost, groups):

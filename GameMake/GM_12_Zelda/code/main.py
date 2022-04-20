@@ -14,7 +14,8 @@ class Game:
         self.level = Level()
 
         # sound
-        main_sound = pygame.mixer.Sound('GameMake/GM12_step_1_Level/audio/main.ogg')
+        main_sound = pygame.mixer.Sound('GameMake/GM_12_Zelda/audio/main.ogg')
+        main_sound.set_volume(0.6)
         main_sound.play(loops = -1)
 
     def run(self):
