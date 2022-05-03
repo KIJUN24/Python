@@ -1,7 +1,7 @@
 # image : https://www.youtube.com/watch?v=YWN8GcmJ-jA&t=2531s
 
 import pygame
-from support import import_folder
+from support import import_folder       # spport라는 파일에서 import_folder 함수를 사용하겠다.
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, surface, create_jump_particles):

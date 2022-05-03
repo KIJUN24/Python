@@ -1,21 +1,23 @@
-import pygame
-from tiles import Tile
-from settings import tile_size, screen_width
-from player import Player
-from particles import ParticleEffect
+import pygame                                   # pygame을 위한 import.
+from tiles import Tile                          # tiles 파일에서 Tile class를 가져옴.
+from settings import tile_size, screen_width    # settings 파일에서 tile_size와 screen_width변수를 가져옴.
+from player import Player                       # player 파일에서 Player class를 가져옴.
+from particles import ParticleEffect            # particels 파일에서 ParticleEffect class를 가져옴.
 
 class Level:
-    def __init__(self, level_data, surface):
-
+    def __init__(self, level_data, surface):                # class를 정의할 때 첫번째로 만드는 함수이다.
+                                                            # 이 함수를 사용하려면 level_data와 surface를 넣어줘야 한다.
         # level setup
-        self.display_surface = surface
-        self.setup_level(level_data)
-        self.world_shift = 0
-        self.current_x = 0
+        self.display_surface = surface                      # 
+        self.setup_level(level_data)                        #
+        self.world_shift = 0                                # 변수를 사용하기 전 0으로 초기화
+        self.current_x = 0                                  # 변수를 사용하기 전 0으로 초기화
 
         # dust
-        self.dust_sprite = pygame.sprite.GroupSingle()
-        self.player_on_ground = False
+        self.dust_sprite = pygame.sprite.GroupSingle()      #
+        self.player_on_ground = False                       #
+
+#########################################################################################################
 
     def create_jump_particles(self, pos):
         if self.player.sprite.facing_right:
