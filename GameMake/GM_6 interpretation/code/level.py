@@ -8,39 +8,44 @@ class Level:
     def __init__(self, level_data, surface):                # class를 정의할 때 첫번째로 만드는 함수이다.
                                                             # 이 함수를 사용하려면 level_data와 surface를 넣어줘야 한다.
         # level setup
-        self.display_surface = surface                      # 
-        self.setup_level(level_data)                        #
+        self.display_surface = surface                      
+        self.setup_level(level_data)                        # setup_level 함수 실행
         self.world_shift = 0                                # 변수를 사용하기 전 0으로 초기화
         self.current_x = 0                                  # 변수를 사용하기 전 0으로 초기화
 
         # dust
-        self.dust_sprite = pygame.sprite.GroupSingle()      #
-        self.player_on_ground = False                       #
+        self.dust_sprite = pygame.sprite.GroupSingle()      # dust_sprite라는 단일 스프라이트를 보유
+        self.player_on_ground = False
 
 #########################################################################################################
 
-    def create_jump_particles(self, pos):
-        if self.player.sprite.facing_right:
-            pos -= pygame.math.Vector2(10, 5)
+    def create_jump_particles(self, pos):                   # 함수를 사용하려면 pos의 정보가 있어야 함.
+        if self.player.sprite.facing_right:                 # player파일의 sprite에서 facing_right가 True일 때
+            pos -= pygame.math.Vector2(10, 5)               # pos는 Vector2(10, 5)만큼 빼준다.
         else:
-            pos += pygame.math.Vector2(10, -5)
-        jump_particle_sprite = ParticleEffect(pos, 'jump')
-        self.dust_sprite.add(jump_particle_sprite)
+            pos += pygame.math.Vector2(10, -5)              # pos는 Vector2(10, 5)만큼 더한다.
+        jump_particle_sprite = ParticleEffect(pos, 'jump')  # jump_particle_sprite에 particles 파일의 class를 사용 (조건에 필요한 정보를 넣어줌(pos, 'jump'))
+        self.dust_sprite.add(jump_particle_sprite)          # dust_sprite에 jump_particle_sprite를 추가시킴
 
-    def get_player_on_ground(self):
-        if self.player.sprite.on_ground:
+    def get_player_on_ground(self):                         
+        if self.player.sprite.on_ground:                    # player파일의 sprite에서 on_ground가 True일 때
             self.player_on_ground = True
         else:
             self.player_on_ground = False
 
     def create_landing_dust(self):
         if not self.player_on_ground and self.player.sprite.on_ground and not self.dust_sprite.sprites():
-            if self.player.sprite.facing_right:
-                offset = pygame.math.Vector2(10, 15)
+            # player_on_ground가 True가 아니고 player 파일의 on_ground가 True이며 dust_sprite가 그룹에 포함하지 않는다면
+            # GroupSingle.sprite() : 이 그룹에 포함된 Sprite에 엑세스 하는 특수 속성
+            # 그룹이 비어 있으면 None이 될 수 있음. Sprite를 GroupSingle 컨테이너에 추가하도록 속성을 할당할 수도 있음.
+            if self.player.sprite.facing_right:         # player파일에 facing_right가 True일 때
+                offset = pygame.math.Vector2(10, 15)    # offset은 Vector2(10, 15)이다.
             else:
                 offset = pygame.math.Vector2(-10, 15)
+                # Vector2 : 사진을 이동시키는 역할로 사용.
             fall_dust_particle = ParticleEffect(self.player.sprite.rect.midbottom - offset, 'land')
-            self.dust_sprite.add(fall_dust_particle)
+            # 위치를 player파일의 rect.midbottom에서 offset만큼 빼줌.
+            self.dust_sprite.add(fall_dust_particle)    # dust_sprite에 fall_dust_particle를 더함.
 
     def setup_level(self, layout):
         self.tiles = pygame.sprite.Group()
@@ -49,14 +54,14 @@ class Level:
         for row_index, row in enumerate(layout):
             # print(row_index)
             # print(row)
-            for col_index, cell in enumerate(row):
+            for col_index, cell in enumerate(row):  
                 # print(f'{row_index}, {col_index} : {cell}')
-                x = col_index * tile_size
-                y = row_index * tile_size
+                x = col_index * tile_size           # x 계산
+                y = row_index * tile_size           # y 계산
 
-                if cell == 'X':
-                    tile = Tile((x,y), tile_size)
-                    self.tiles.add(tile)
+                if cell == 'X':                     # cell이 'X'라면
+                    tile = Tile((x,y), tile_size)   # Tile이라는 class사용.
+                    self.tiles.add(tile)            # tiles에 tile을 더함.
                 
                 if cell == 'P':
                     player_sprite = Player((x,y), self.display_surface, self.create_jump_particles)
@@ -119,7 +124,7 @@ class Level:
             player.on_ceiling = False
 
 
-    def run(self):
+    def run(self):  # 아래에 있는 함수들을 업데이트 시키고 surface에 넣어서 보여줌.
 
         # dust particles
         self.dust_sprite.update(self.world_shift)

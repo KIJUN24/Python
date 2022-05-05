@@ -53,20 +53,20 @@ class Player(pygame.sprite.Sprite):
                                                     # 가만히 있을 때는 idle 사진이 animation되게 함.
 
         # loop over frame index
-        self.frame_index += self.animation_speed
-        if self.frame_index >= len(animation):
-            self.frame_index = 0
+        self.frame_index += self.animation_speed    # frame_index에 animation_speed를 더해줌
+        if self.frame_index >= len(animation):      # frame_index가 animation으로 지정된 사진의 수보다 크거나 작으면
+            self.frame_index = 0                    # frame_index는 0으로 돌아간다.
 
-        image = animation[int(self.frame_index)]
-        if self.facing_right:
+        image = animation[int(self.frame_index)]    # image는 animation(dir)로 설정 -> dir안에 frame_index를 int형 변환후 넣어줌.
+        if self.facing_right:       # facing_right가 True 일 때 (캐릭터가 오른쪽을 볼 때)
             self.image = image
-        else:
-            flipped_image = pygame.transform.flip(image, True, False)
+        else:                       # 캐릭터가 왼쪽을 볼 때
+            flipped_image = pygame.transform.flip(image, True, False)   # image를 x축 기준으로 뒤집음.
             self.image = flipped_image
 
         #  set the rect
-        if self.on_ground and self.on_right:
-            self.rect = self.image.get_rect(bottomright = self.rect.bottomright)
+        if self.on_ground and self.on_right:                                        # on_ground와 on_right가 True일 때
+            self.rect = self.image.get_rect(bottomright = self.rect.bottomright)    # 이미지의 사각형 영역 반환, 이미지의 bottomright를 rect.bottomright로 설정
         elif self.on_ground and self.on_left:
             self.rect = self.image.get_rect(bottomleft = self.rect.bottomleft)
         elif self.on_ground:
@@ -77,22 +77,24 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(topleft = self.rect.topleft)
         elif self.on_ceiling:
             self.rect = self.image.get_rect(midtop = self.rect.midtop)
+        # get_rect : 이미지의 크기를 가진 직사각형 객체를 가져온다.
 
     def run_dust_animation(self):
-        if self.status == 'run' and self.on_ground:
-            self.dust_frame_index += self.dust_animation_speed
-            if self.dust_frame_index >= len(self.dust_run_particles):
-                self.dust_frame_index = 0
+        if self.status == 'run' and self.on_ground:     # status가 run이라면
+            self.dust_frame_index += self.dust_animation_speed  # dust_frame_index에 dust_animation_speed만큼 계속 증가시킴.
+            if self.dust_frame_index >= len(self.dust_run_particles):   # dust_frame_index가 dust_run_particles의 사진 수 보다 크거나 같다면
+                self.dust_frame_index = 0       # dust_frame_index를 다시 0으로 설정
 
-            dust_particle = self.dust_run_particles[int(self.dust_frame_index)]
+            dust_particle = self.dust_run_particles[int(self.dust_frame_index)]     # dust_particle : dust_run_particles(dir)에 dust_frame_index를 int형으로 변환 후 dir에 넣음.
 
-            if self.facing_right:
-                pos = self.rect.bottomleft - pygame.math.Vector2(6,10)
-                self.display_surface.blit(dust_particle, pos)
+            if self.facing_right:           # facing_right가 True일 때 
+                # 자연스러움을 위해 사진을 옮김.
+                pos = self.rect.bottomleft - pygame.math.Vector2(6,10)      # pos는 rect의 bottomleft에서 왼쪽으로 6픽셀, 위로 10픽셀 이동한 정보.
+                self.display_surface.blit(dust_particle, pos)       # surface에 dust_particle이라는 사진을 위치(대상)에 복사해 넣는다.
             else:
-                pos = self.rect.bottomright - pygame.math.Vector2(6,10)
-                flipped_dust_particle = pygame.transform.flip(dust_particle, True, False)
-                self.display_surface.blit(flipped_dust_particle, pos)
+                pos = self.rect.bottomright - pygame.math.Vector2(6,10)     # pos는 rect의 bottomright에서 왼쪽으로 6픽셀, 위로 10픽셀 이동한 정보.
+                flipped_dust_particle = pygame.transform.flip(dust_particle, True, False)   # x축 기준으로 사진 뒤집기.
+                self.display_surface.blit(flipped_dust_particle, pos)   # surface에 flipped_dust_particle이라는 사진을 위치(대상)에 복사해 넣는다.
 
     def get_input(self):
         keys = pygame.key.get_pressed()         # key가 눌러진 것을 인식
@@ -111,15 +113,15 @@ class Player(pygame.sprite.Sprite):
             self.create_jump_particles(self.rect.midbottom) # jump시 점프 이미지의 반환된 사각형의 중심을 midbottom으로 잡아줌.
 
     def get_status(self):
-        if self.direction.y < 0:
-            self.status = 'jump'
-        elif self.direction.y > 1:
-            self.status = 'fall'
-        else:
-            if self.direction.x != 0:
-                self.status = 'run'
-            else:
-                self.status = 'idle'
+        if self.direction.y < 0:            # direction.y (Vector y값)이 0보다 작아지면 -> 점프를 한다면
+            self.status = 'jump'                # status를 jump로 설정
+        elif self.direction.y > 1:          # direction.y (Vector y값)이 1보다 커지면 -> 점프를 하고 내려오는 중이라면
+            self.status = 'fall'                # status를 fall로 설정
+        else:                               # 둘 다 아닐 때
+            if self.direction.x != 0:           # direction.x (Vector x값)이 0이 아니라면 -> 움직이는 중이라면
+                self.status = 'run'                 # status를 run으로 설정
+            else:                               # x값의 변동이 없다면 -> 움직이지 않는다면
+                self.status = 'idle'                # status를 idle로 설정
 
     def apply_gravity(self):
         self.direction.y += self.gravity        # direction의 y값이 gravity만큼 증가한다.
@@ -130,7 +132,7 @@ class Player(pygame.sprite.Sprite):
         self.direction.y = self.jump_speed      # direction의 y값은 jump_speed이 된다. (Vector의 y값이 jump실행시 순간적으로 -16이 됨.)
         # 캐릭터가 점프함.
 
-    def update(self):
+    def update(self):                           # 위에 만든 함수들 update(실행)
         self.get_input()
         self.get_status()
         self.animate()
