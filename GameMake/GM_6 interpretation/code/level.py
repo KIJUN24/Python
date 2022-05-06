@@ -48,13 +48,13 @@ class Level:
             self.dust_sprite.add(fall_dust_particle)    # dust_sprite에 fall_dust_particle를 더함.
 
     def setup_level(self, layout):
-        self.tiles = pygame.sprite.Group()
-        self.player = pygame.sprite.GroupSingle()
+        self.tiles = pygame.sprite.Group()          # 객체(sprite)가 여러개인 경우 Group으로 사용
+        self.player = pygame.sprite.GroupSingle()   # 단일 sprite만 존재.
 
-        for row_index, row in enumerate(layout):
+        for row_index, row in enumerate(layout):    # enumerate : 인덱스와 원소로 이루어진 튜플을 만들어줌. (layout을 튜플 형태로 만듦.)
             # print(row_index)
             # print(row)
-            for col_index, cell in enumerate(row):  
+            for col_index, cell in enumerate(row):  # (row를 튜플 형태로 만듦.)
                 # print(f'{row_index}, {col_index} : {cell}')
                 x = col_index * tile_size           # x 계산
                 y = row_index * tile_size           # y 계산
@@ -63,9 +63,12 @@ class Level:
                     tile = Tile((x,y), tile_size)   # Tile이라는 class사용.
                     self.tiles.add(tile)            # tiles에 tile을 더함.
                 
-                if cell == 'P':
-                    player_sprite = Player((x,y), self.display_surface, self.create_jump_particles)
-                    self.player.add(player_sprite)
+                if cell == 'P':                     # cell이 'P'라면
+                    player_sprite = Player((x,y), self.display_surface, self.create_jump_particles) # Player class 사용
+                    self.player.add(player_sprite)  # self.player에 player_sprite는 더한다.
+
+                # cell이 x인 곳에는 Tile을 사용하고 cell이 p인 곳에는 Player을 사용한다.
+
 
     def scroll_x(self):
         player = self.player.sprite
@@ -82,9 +85,11 @@ class Level:
             self.world_shift = 0
             player.speed = 8
 
-    def horizontal_movement_collision(self):
-        player = self.player.sprite
-        player.rect.x += player.direction.x * player.speed
+    def horizontal_movement_collision(self):    # 가로 움직임 충돌
+        player = self.player.sprite             # 위에서 선언한 self.player sprite
+        player.rect.x += player.direction.x * player.speed      
+        # player.rect.x는 바로 위에서 선언한 player의 사각형 x값이고 
+        # += 기준 오른쪽인 더하는 대상은 player파일에서 선언한 direction x값과 speed값이다.
 
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):
@@ -103,9 +108,9 @@ class Level:
         if player.on_right and (player.rect.right > self.current_x or player.direction.x <= 0):
             player.on_right = False
 
-    def vertical_movement_collision(self):
-        player = self.player.sprite
-        player.apply_gravity()
+    def vertical_movement_collision(self):      # 세로 움직임 충돌 -> 가로와 x,y만 다르고 대체적으로 동일
+        player = self.player.sprite             # 위에서 선언한 self.player sprite
+        player.apply_gravity()                  # player파일에서 선언한 apply_gravity를 사용
 
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):
