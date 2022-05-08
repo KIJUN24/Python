@@ -71,19 +71,22 @@ class Level:
 
 
     def scroll_x(self):
-        player = self.player.sprite
-        player_x = player.rect.centerx
-        direction_x = player.direction.x
+        player = self.player.sprite                                 # player를 set_level에서 선언한 player의 sprite로 설정.
+        player_x = player.rect.centerx                              # playe의 사각형에 centerx값을 player_x에 저장한다.
+        direction_x = player.direction.x                            # player의 direction.x값을 direction_x에 저장한다.
 
-        if player_x < screen_width * 1/4 and direction_x < 0:
-            self.world_shift = 8
-            player.speed = 0
-        elif player_x > screen_width * 3/4 and direction_x > 0:
-            self.world_shift = -8
-            player.speed = 0
+        if player_x < screen_width * 1/4 and direction_x < 0:       #  player_x가 screen_width * 1/4값보다 작고 direction_x값이 0보다 작으면
+            self.world_shift = 8        # world_shift를 8로 설정한다.
+            player.speed = 0            # player파일의 speed를 0로 설정한다.
+        elif player_x > screen_width * 3/4 and direction_x > 0:     # player_x가 screen_width * 3/4값보다 크고 direction_x값이 0보다 크면
+            self.world_shift = -8       # world_shift를 -8로 설정한다.
+            player.speed = 0            # player파일의 speed를 0로 설정한다.
         else:
-            self.world_shift = 0
-            player.speed = 8
+            self.world_shift = 0        # world_shift를 0로 설정한다.
+            player.speed = 8            # player파일의 speed를 0로 설정한다.
+
+        # 캐릭터가 왼쪽이나 오른쪽으로 가다가 범위를 지나갈 때 캐릭터의 이동 스피드를 0으로 놓고 화면이 움직이는 스피드를 올려준다.
+        # 캐릭터가 왼쪽으나 오른쪽으로 이동을 해도 범위 값을 지나가지 않는다면 화면의 스피드는 0으로 넣고 캐릭터의 이동 스피드를 올려준다.
 
     def horizontal_movement_collision(self):    # 가로 움직임 충돌
         player = self.player.sprite             # 위에서 선언한 self.player sprite
@@ -91,24 +94,26 @@ class Level:
         # player.rect.x는 바로 위에서 선언한 player의 사각형 x값이고 
         # += 기준 오른쪽인 더하는 대상은 player파일에서 선언한 direction x값과 speed값이다.
 
-        for sprite in self.tiles.sprites():
-            if sprite.rect.colliderect(player.rect):
-                if player.direction.x < 0:
-                    player.rect.left = sprite.rect.right
-                    player.on_left = True
-                    self.current_x = player.rect.left
-                elif player.direction.x > 0:
-                    player.rect.right = sprite.rect.left
-                    player.on_right = True
-                    self.current_x = player.rect.right
+        for sprite in self.tiles.sprites():     # tiles가 포함된 그룹의 스프라이트 목록을 반환 -> tile가 포함된 그룹의 스프라이트들을 sprite로 설정
+            if sprite.rect.colliderect(player.rect):        # sprite의 rect가 player의 rect와 겹치는지 확인(테스트). 사각형의 일부가 겹치면 True를 반환.
+                if player.direction.x < 0:      # player의 direction에 x값이 0보다 작으면
+                    player.rect.left = sprite.rect.right    # player의 사각형 left은 for문의 sprite의 사각형 right과 같다. (player의 left 값에 sprite 사각형의 right의 값이 된다.)
+                    player.on_left = True       # player의 on_left는 True로 설정된다.
+                    self.current_x = player.rect.left       # current_x에 player 사각형의 left값을 저장한다.
+                elif player.direction.x > 0:    # player의 direction에 x값이 0보다 크면
+                    player.rect.right = sprite.rect.left    # player의 사각형 right은 for문의 sprite의 사각형 left과 같다. (player의 right 값에 sprite 사각형의 left의 값이 된다.)
+                    player.on_right = True      # player의 on_right는 True로 설정된다.
+                    self.current_x = player.rect.right      # current_x에 player 사각형의 right값을 저장한다.
 
         if player.on_left and (player.rect.left < self.current_x or player.direction.x >= 0):
-            player.on_left = False
+            # player의 on_left가 True이고(and) (player의 사격형 left값이 current_x값보다 작거나(or) player의 direction에 x값이 0이상) 이 조건이라면
+            player.on_left = False  # player의 on_left는 False로 설정.
 
         if player.on_right and (player.rect.right > self.current_x or player.direction.x <= 0):
-            player.on_right = False
+            # player의 on_right가 True이고(and) (player의 사격형 right값이 current_x값보다 크거나(or) player의 direction에 x값이 0이하) 이 조건이라면
+            player.on_right = False # player의 on_right는 False로 설정.
 
-    def vertical_movement_collision(self):      # 세로 움직임 충돌 -> 가로와 x,y만 다르고 대체적으로 동일
+    def vertical_movement_collision(self):      # 세로 움직임 충돌 -> 가로와 x,y만 다르고 대체적으로 비슷
         player = self.player.sprite             # 위에서 선언한 self.player sprite
         player.apply_gravity()                  # player파일에서 선언한 apply_gravity를 사용
 
