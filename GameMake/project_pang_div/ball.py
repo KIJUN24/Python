@@ -1,12 +1,7 @@
 import pygame
 from path import *
 
-ball_images = [
-    pygame.image.load(os.path.join(image_path, "balloon1.png")),
-    pygame.image.load(os.path.join(image_path, "balloon2.png")),
-    pygame.image.load(os.path.join(image_path, "balloon3.png")),
-    pygame.image.load(os.path.join(image_path, "balloon4.png"))
-    ]
+
 
 ball_speed_y = [-18, -15, -12, -9]  # index 0, 1, 2, 3에 해당하는 값
 
