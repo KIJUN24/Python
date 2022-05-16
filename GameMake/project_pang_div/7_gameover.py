@@ -104,6 +104,7 @@ while running:
                 weapon_x_pos = character_x_pos + (character_width/2) - (weapon_width/2)
                 weapon_y_pos = character_y_pos
                 weapons.append([weapon_x_pos, weapon_y_pos])
+                print(weapon_x_pos, weapon_y_pos)
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -245,6 +246,7 @@ while running:
     
     for weapon_x_pos, weapon_y_pos in weapons:
         screen.blit(weapon, (weapon_x_pos, weapon_y_pos))
+        # print(weapon_x_pos, weapon_y_pos)
 
     for idx, val in enumerate(balls):
         ball_pos_x = val["pos_x"]
