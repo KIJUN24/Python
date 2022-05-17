@@ -17,20 +17,6 @@ class Player(Stage):
         self.player_y_pos = SCREEN_HEIGHT - self.player_height - self.stage_height
         self.player_to_x = 0
         self.player_speed = 5
-        keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_RIGHT]:
-            self.player_to_x = self.player_speed
-            # print(self.player_to_x, "right")
-            print("player file : ",  self.player_x_pos)
-        elif keys[pygame.K_LEFT]:
-            self.player_to_x = -self.player_speed
-            # print(self.player_to_x, "left")
-            print("player file : ", self.player_x_pos)
-        else:
-            self.player_to_x = 0
-
-        self.player_x_pos += self.player_to_x
 
         # player rect information update
         self.player_rect = self.player.get_rect()

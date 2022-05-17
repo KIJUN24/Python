@@ -1,9 +1,8 @@
 import pygame, sys
-from background import Background
 from player import Player
-from stage import Stage
 from weapon import Weapon
 from settings import *
+from level import Level
 
 pygame.init()
 
@@ -11,9 +10,8 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Self Study")
 
 clock = pygame.time.Clock()
-background = Background(screen)
+level = Level(screen)
 player = Player(screen)
-stage = Stage(screen)
 weapon = Weapon(screen)
 running = True
 
@@ -29,9 +27,8 @@ while running:
                 pygame.quit()
                 sys.exit()
 
-    background.update()
-    stage.update()
-    player.update()
-    weapon.update()
+    level.update()
+    # player.update()
+    # weapon.update()
 
     pygame.display.update()
