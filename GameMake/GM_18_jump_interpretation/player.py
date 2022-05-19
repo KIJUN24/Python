@@ -48,13 +48,15 @@ class Player(pygame.sprite.Sprite):
 
     def import_character_assets(self):
         character_path = 'C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\character\\'
-        self.animations = {'idle':[], 'run':[], 'jump':[], 'fall':[]}
+        # character 경로를 character_path에 저장
+        self.animations = {'idle':[], 'run':[], 'jump':[], 'fall':[]}  
+        # '~'리스트를 만듦.
 
-        for animation in self.animations.keys():
-            full_path = character_path + animation
-            self.animations[animation] = import_folder(full_path)
+        for animation in self.animations.keys():    # Key들만 모아서 animation에 저장(idle, run, jump, fall)
+            full_path = character_path + animation  # full_path는 위에서 선언한 character_path 경로와 animation을 합친 것임.
+            self.animations[animation] = import_folder(full_path)   # full_path의 정보들을 가져와 animations[animation]에 저장
 
-    def import_dust_run_particles(self):
+    def import_dust_run_particles(self):    # dust_particles 안에 run 폴더를 가져옴.
         self.dust_run_particles = import_folder('C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_7\\graphics\\character\\dust_particles\\run')
 
     def animate(self):
@@ -66,13 +68,13 @@ class Player(pygame.sprite.Sprite):
             self.frame_index = 0
 
         image = animation[int(self.frame_index)]
-        if self.facing_right:
+        if self.facing_right:   # facing_right가 True라면
             self.image = image
-            self.rect.bottomleft = self.collision_rect.bottomleft
-        else:
-            flipped_image = pygame.transform.flip(image, True, False)
-            self.image = flipped_image
-            self.rect.bottomright = self.collision_rect.bottomright
+            self.rect.bottomleft = self.collision_rect.bottomleft   # rect의 bottomleft를 collision_rect의 bottomleft값으로 저장
+        else:   # 아니라면
+            flipped_image = pygame.transform.flip(image, True, False)   # image를 x축 기준으로 반전시키고 flipped_image에 저장해라
+            self.image = flipped_image  # self.image에 flipped_image정보 값 저장
+            self.rect.bottomright = self.collision_rect.bottomright     # rect의 bottomright를 collision_rect의 bottomright값으로 저장
 
         if self.invincible:
             alpha = self.wave_value()
