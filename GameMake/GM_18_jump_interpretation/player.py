@@ -127,20 +127,20 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.status = 'idle'
 
-    def apply_gravity(self):
-        self.direction.y += self.gravity
-        self.collision_rect.y += self.direction.y
+    def apply_gravity(self):    # player가 점프한 후 중력작용하는 효과를 주는 함수
+        self.direction.y += self.gravity    # direction.y값에 gravity값을 증가시켜줌.
+        self.collision_rect.y += self.direction.y   # collision_recr.y 값에 direction.y값을 증가시켜줌.
 
-    def jump(self):
-        self.direction.y = self.jump_speed
-        self.jump_sound.play()
+    def jump(self):     # jump할 때 사용하는 함수
+        self.direction.y = self.jump_speed  # direction.y값에 jump_speed값을 증가시켜줌.
+        self.jump_sound.play()  # Sound
 
     def get_damage(self):
-        if not self.invincible:
-            self.hit_sound.play()
-            self.change_health(-10)
-            self.invincible = True
-            self.hurt_time = pygame.time.get_ticks()
+        if not self.invincible:         # invincible이 False라면
+            self.hit_sound.play()       # Sound
+            self.change_health(-10)     # change_health(-10) : 10만큼 줄어듦.
+            self.invincible = True      # invincible이 True로 바꿔줌
+            self.hurt_time = pygame.time.get_ticks()    # 약간의 delay를 줌.
     
     def invincibility_timer(self):
         if self.invincible:
