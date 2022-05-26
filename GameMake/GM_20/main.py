@@ -8,7 +8,10 @@ test_font = pygame.font.Font('GameMake/GM_20/font/Pixeltype.ttf', 50)   # 폰드
 
 sky_surface = pygame.image.load('GameMake/GM_20/graphics/Sky.png').convert()    # 사진
 ground_surface = pygame.image.load('GameMake/GM_20/graphics/ground.png').convert()  # 사진
-text_surface = test_font.render('My Game', False, 'Black')  # 화면 상 글자 넣기
+
+# text_surf = test_font.render('My Game', False, 'Black')  # 화면 상 글자 넣기
+score_surf = test_font.render('My Game', False, 'Black')  # 화면 상 글자 넣기
+score_rect = score_surf.get_rect(center = (400, 50))
 
 snail_surf = pygame.image.load('GameMake/GM_20/graphics/snail/snail1.png').convert_alpha()  
 snail_rect = snail_surf.get_rect(bottomright = (600, 300))  # snail_surf의 사진 사각형 -> (bottomright를 기준)
@@ -39,7 +42,8 @@ while True:
 
     screen.blit(sky_surface, (0,0))         # pygame 화면 상에 그리기
     screen.blit(ground_surface, (0,300))    # pygame 화면 상에 그리기
-    screen.blit(text_surface, (350, 50))    # pygame 화면 상에 그리기
+    pygame.draw.rect(screen, "Pink", score_rect)
+    screen.blit(score_surf, score_rect)    # pygame 화면 상에 그리기
     snail_rect.x -= 3   # snail_rect의 x값을 3씩 연속적으로 빼면서 snail_surf를 왼쪽으로 움직이게 함.
     # if snail_x_pos < 0:
     #     snail_x_pos = 600
