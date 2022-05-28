@@ -10,7 +10,7 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Zelda')
         self.clock = pygame.time.Clock()
-        
+
         self.level = Level()
 
         # sound
@@ -30,7 +30,7 @@ class Game:
                     if event.key == pygame.K_ESCAPE:
                         pygame.quit()
                         sys.exit()
-            
+
             self.screen.fill(WATER_COLOR)
             self.level.run()
             pygame.display.update()

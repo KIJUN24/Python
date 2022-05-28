@@ -14,7 +14,7 @@ class UI:
 
         # coins
         self.coin = pygame.image.load('C:\\Users\\lkjun\\OneDrive\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_9\\graphics\\ui\\coin.png').convert_alpha()
-        self.coin_rect = self.coin.get_rect(topleft = (50,61))
+        self.coin_rect = self.coin.get_rect(topleft = (50,61))  
         self.font = pygame.font.Font("C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_9\\graphics\\ui\\ARCADEPI.TTF", 30)
 
     def show_health(self, current, full):
@@ -27,6 +27,6 @@ class UI:
 
     def show_coins(self, amount):
         self.display_surface.blit(self.coin, self.coin_rect)    # display_surface에 coin을 coin_rect위치에 그림
-        coin_amount_surf = self.font.render(str(amount), False, '#33323d')
-        coin_amount_rect = coin_amount_surf.get_rect(midleft = (self.coin_rect.right + 4, self.coin_rect.centery))
+        coin_amount_surf = self.font.render(str(amount), False, '#33323d')  # amount를 '#33323d'색으로 폰트 설정
+        coin_amount_rect = coin_amount_surf.get_rect(midleft = (self.coin_rect.right + 4, self.coin_rect.centery))  # blit하기 위해 rect로 위치 설정
         self.display_surface.blit(coin_amount_surf, coin_amount_rect)   # display_surface에 coin_amount_surf를 coin_amount_rect위치에 그림.

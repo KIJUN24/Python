@@ -77,7 +77,7 @@ level_5 = {
     'enemies':'C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_8_7\\Levels\\5\\level_5_enemies.csv',
     'constraints':'C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_8_7\\Levels\\5\\level_5_constraints.csv',
     'player':'C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_8_7\\Levels\\5\\level_5_player.csv',
-    'grass':'C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_8_7\\Levels\\5\\level_5_grass.csv',
+    'grass':'C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_8_7\\Levels\\5\\level_5_gress.csv',
     'node_pos' : (1050, 400),
     'unlock' : 5,
     'node_graphics' : 'C:\\Users\\lkjun\\OneDrive\\바탕 화면\\PythonWorkspace\\python_study\\Python_practice\\GameMake\\GM_8_7\\graphics\\overworld\\5'}
