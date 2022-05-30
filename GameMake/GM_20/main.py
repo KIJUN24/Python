@@ -43,6 +43,10 @@ game_name_rect = game_name.get_rect(center = (400, 80))             # game_name 
 game_message = test_font.render('Press space to run', False, (111,196,169)) # 'Press apace to run'라는 폰트를 만듦 -> (폰트 내용, 글꼴 부드러움->False, color)
 game_message_rect = game_message.get_rect(center = (400, 320))  # game_message 사각형을 기준으로 잡음(기준점 : center)
 
+# Timer
+obstacle_timer= pygame.USEREVENT + 1
+pygame.time.set_timer(obstacle_timer, 900)
+
 while True:
     for event in pygame.event.get():    # 게임 이벤트를 만들기 위한 for문
         if event.type == pygame.QUIT:   # 게임 끄기 위함
@@ -84,6 +88,8 @@ while True:
                 if event.key == pygame.K_ESCAPE:    # ESC를 눌렀을 때
                     pygame.quit()   # pygame 종료
                     sys.exit()      # pygame 종료 시 오류를 없애기 위함
+        if event.type == obstacle_timer:
+            print('test')
 
     if game_active: # game_active가 True일 때
         screen.blit(sky_surface, (0,0))         # pygame 화면 상에 그리기
