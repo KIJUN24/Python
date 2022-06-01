@@ -13,7 +13,13 @@ def obstacle_movement(obstacle_list):
         for obstacle_rect in obstacle_list:
             obstacle_rect.x -= 5
 
-            screen.blit(snail_surf, obstacle_rect)
+            if obstacle_rect.bottom == 300:
+                screen.blit(snail_surf, obstacle_rect)
+            else:
+                screen.blit(fly_surf, obstacle_rect)
+
+        obstacle_list = [obstacle for obstacle in obstacle_list if obstacle.x > -100]
+
         return obstacle_list
     else:
         return []
@@ -36,6 +42,8 @@ ground_surface = pygame.image.load('GameMake/GM_20/graphics/ground.png').convert
 
 # Obstacles
 snail_surf = pygame.image.load('GameMake/GM_20/graphics/snail/snail1.png').convert_alpha()  
+fly_surf = pygame.image.load('GameMake/GM_20/graphics/fly/fly1.png').convert_alpha()
+
 snail_rect = snail_surf.get_rect(bottomright = (600, 300))  # snail_surf의 사진 사각형 -> (bottomright를 기준)
 
 obstacle_rect_list = []
@@ -103,7 +111,10 @@ while True:
                     pygame.quit()   # pygame 종료
                     sys.exit()      # pygame 종료 시 오류를 없애기 위함
         if event.type == obstacle_timer and game_active:
-            obstacle_rect_list.append(snail_surf.get_rect(bottomright = (randint(900,1100), 300)))
+            if randint(0,2):
+                obstacle_rect_list.append(snail_surf.get_rect(bottomright = (randint(900,1100), 300)))
+            else:
+                obstacle_rect_list.append(fly_surf.get_rect(bottomright = (randint(900,1100), 210)))
 
     if game_active: # game_active가 True일 때
         screen.blit(sky_surface, (0,0))         # pygame 화면 상에 그리기
