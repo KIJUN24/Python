@@ -8,7 +8,7 @@ def display_score():
     screen.blit(score_surf, score_rect)     # screen에 score_surf를 score_rect 위치에 넣음.
     return current_time     # current_time을 어디서든 쓸 수 있게 return을 함
 
-def obstacle_movement(obstacle_list):
+def obstacle_movement(obstacle_list):       # 장애물이 움직일 때 필요한 함수
     if obstacle_list:
         for obstacle_rect in obstacle_list:
             obstacle_rect.x -= 5
@@ -23,6 +23,14 @@ def obstacle_movement(obstacle_list):
         return obstacle_list
     else:
         return []
+
+def collisions(player, obstacles):      # 충돌 시 필요한 함수
+    if obstacles:
+        for obstacle_rect in obstacles:
+            if player.colliderect(obstacle_rect):
+                return False
+    return True
+
 
 pygame.init()
 screen = pygame.display.set_mode((800, 400))    # 화면 크기 세팅 set_mode((w,h)) -> 튜플형태
@@ -110,11 +118,11 @@ while True:
                 if event.key == pygame.K_ESCAPE:    # ESC를 눌렀을 때
                     pygame.quit()   # pygame 종료
                     sys.exit()      # pygame 종료 시 오류를 없애기 위함
-        if event.type == obstacle_timer and game_active:
-            if randint(0,2):
-                obstacle_rect_list.append(snail_surf.get_rect(bottomright = (randint(900,1100), 300)))
-            else:
-                obstacle_rect_list.append(fly_surf.get_rect(bottomright = (randint(900,1100), 210)))
+        if event.type == obstacle_timer and game_active:    # event타입이 obstacle_time이고 game_active가 True라면
+            if randint(0,2):    # 0과 1이 랜덤으로 나온다면
+                obstacle_rect_list.append(snail_surf.get_rect(bottomright = (randint(900,1100), 300)))  # obstacle_rect_list에 snail_surf의 사각형을 추가시켜라
+            else:   # if문이 아니라면
+                obstacle_rect_list.append(fly_surf.get_rect(bottomright = (randint(900,1100), 210)))    # obstacle_rect_list에 fly_surf의 사각형을 추가시켜라
 
     if game_active: # game_active가 True일 때
         screen.blit(sky_surface, (0,0))         # pygame 화면 상에 그리기
@@ -144,12 +152,16 @@ while True:
         obstacle_rect_list = obstacle_movement(obstacle_rect_list)
 
         # collision
-        if snail_rect.colliderect(player_rect): # snail_rect와 player_rect가 충돌할 때
-            game_active = False     # game_active를 False로 변경
+        # if snail_rect.colliderect(player_rect): # snail_rect와 player_rect가 충돌할 때
+        #     game_active = False     # game_active를 False로 변경
+        game_active = collisions(player_rect, obstacle_rect_list)   
 
     else:   # game_active가 False일 때
         screen.fill((94,129,162))   # screen 색을 (94,129,162)로 둔다.
         screen.blit(player_stand, player_stand_rect)    # player_stand 사진을 복사해 player_stand_rect의 위치에 넣는다.
+        obstacle_rect_list.clear()
+        player_rect.midbottom = (80,300)
+        player_gravity = 0
 
         score_message = test_font.render(f'Your score : {score}', False, (111,196,169))     # score를 (111,196,169)색으로 폰트 설정
         score_message_rect = score_message.get_rect(center = (400,330))     # 위치 설정을 위한 rect설정
