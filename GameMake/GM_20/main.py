@@ -57,6 +57,11 @@ snail_rect = snail_surf.get_rect(bottomright = (600, 300))  # snail_surf의 사�
 obstacle_rect_list = []
 
 player_surf = pygame.image.load('GameMake/GM_20/graphics/player/player_walk_1.png').convert_alpha()
+
+player_walk_1 = pygame.image.load('GameMake/GM_20/graphics/player/player_walk_1.png').convert_alpha()
+player_walk_2 = pygame.image.load('GameMake/GM_20/graphics/player/player_walk_2.png').convert_alpha()
+player_walk = [player_walk_1, player_walk_2]
+# player_jump = 
 player_rect = player_surf.get_rect(midbottom = (80,300))    # player_surf의 사진 사각형 -> (midbottom를 기준)
 player_gravity = 0
 
