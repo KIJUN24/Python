@@ -7,7 +7,7 @@ plt.scatter(fish_data_list.bream_length, fish_data_list.bream_weight)
 plt.scatter(fish_data_list.smelt_length, fish_data_list.smelt_weight)
 plt.xlabel('length')
 plt.ylabel('weight')
-plt.show()
+# plt.show()
 
 
 ## ***** length와 weight에 두 물고기의 정보를 저장 후 리스트 안에 넣음 *****
@@ -54,7 +54,7 @@ kn.fit(fish_data, fish_target)
 
 
 ## 무조건 도미
-kn49 = KNeighborsClassifier(n_neighbors=49)
+kn49 = KNeighborsClassifier(n_neighbors=49) # 참고 데이터를 49개로 한 kn49 모델
 ## 어떠한 데이터가 오더라도 도미로 예측함(전체적으로 도미가 더 많기 떄문)
 kn49.fit(fish_data, fish_target)
 # print(kn49.score(fish_data, fish_target))
