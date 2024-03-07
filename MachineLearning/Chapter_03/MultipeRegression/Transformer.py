@@ -13,8 +13,8 @@ poly.fit([[2,3]])
 # print(poly.transform([[2,3]]))
 
 poly = PolynomialFeatures(include_bias=False)
-poly.fit(trian_input)
-train_poly = poly.transform(trian_input)
+poly.fit(train_input)
+train_poly = poly.transform(train_input)
 # print(train_poly.shape)
 # 결과값 : (42, 9) : 42개의 샘플과 9개의 특성이 있음.
 # print(poly.get_feature_names_out())

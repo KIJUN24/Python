@@ -19,5 +19,5 @@ perch_weight = np.array(
 
 from sklearn.model_selection import train_test_split
 
-trian_input, test_input, trian_target, test_target = train_test_split(
+train_input, test_input, train_target, test_target = train_test_split(
     perch_full, perch_weight, random_state=42)
