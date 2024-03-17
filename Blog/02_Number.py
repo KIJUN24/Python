@@ -1,14 +1,14 @@
 # 양수
-Interger_Number1 = 1568
-print("양수", Interger_Number1)
+IntNumber1 = 123
+print("양수", IntNumber1)
 
 # 음수
-Interger_Number2 = -111
-print("음수", Interger_Number2)
+IntNumber2 = -111
+print("음수", IntNumber2)
 
 # 0
-Interger_Number3 = 0
-print("영(제로)", Interger_Number3)
+IntNumber3 = 0
+print("영(제로)", IntNumber3)
 
 # 양의(플러스) 소수점
 Floating_Point_Number1 = 3.14
