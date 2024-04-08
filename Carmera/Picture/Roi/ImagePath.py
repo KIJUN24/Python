@@ -1,1 +1,0 @@
-ImagePath = 'D:\\Programing\\Python_Workspace\\Carmera\\Roi\\LineImage2.jpg'

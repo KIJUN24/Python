@@ -1,0 +1,1 @@
+ImagePath = 'D:\\Programing\\Python_Workspace\\Carmera\\Picture\\Roi\\LineImage2.jpg'

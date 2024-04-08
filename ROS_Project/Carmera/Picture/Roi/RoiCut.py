@@ -1,6 +1,6 @@
 import cv2
 
-ImgPath = 'D:\\Programing\\Python_Workspace\\Carmera\\Roi\\LineImage2.jpg'
+ImgPath = 'D:\\Programing\\Python_Workspace\\Carmera\\Picture\\Roi\\LineImage2.jpg'
 img = cv2.imread(ImgPath, cv2.IMREAD_COLOR)
 
 print(img.shape)
